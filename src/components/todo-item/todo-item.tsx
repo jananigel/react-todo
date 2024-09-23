@@ -1,13 +1,29 @@
-const TodoItem = () => {
+import { useTodo } from "../../contexts/todo-context";
+import Todo from "../../core/interfaces/todo.interface.tsx";
+
+const TodoItem = ({ name, isCompleted, id }: Todo) => {
+
+  const { deleteTodo, toggleTodo } = useTodo();
+
+  const onDeleteClick = () => {
+    deleteTodo(id);
+  }
+
+  const onIsCompleteChanged = () => {
+    toggleTodo(id);
+  }
+
   return (
     <>
-      <div className="item">
+      <div className="item flex">
         <div className="left-area">
-          <p className="name"></p>
+          <label>
+            <input type="checkbox" onChange={ onIsCompleteChanged } defaultChecked={ isCompleted } />
+            <span className="name">{ name }</span>
+          </label>
         </div>
         <div className="right-area">
-          <button>Complete</button>
-          <button>Delete</button>
+          <button onClick={onDeleteClick}>Delete</button>
         </div>
       </div>
     </>
